@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="DebugPilotAI.LalitSingh" Version="0.1.1" Language="en-US" Publisher="Lalit Singh" />
+    <DisplayName>DebugPilot AI</DisplayName>
+    <Description xml:space="preserve">Deterministic-first debugging assistant for Visual Studio. Diagnose a supplied error, inspect the evidence, and review suggested fixes. Optional AI analysis sends only redacted context that you review and approve each time. This version does not edit your source files.</Description>
+    <Tags>debugging;diagnostics;C#;AI;developer-tools</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)"><ProductArchitecture>amd64</ProductArchitecture></InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.0,19.0)"><ProductArchitecture>amd64</ProductArchitecture></InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0,19.0)"><ProductArchitecture>amd64</ProductArchitecture></InstallationTarget>
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,19.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgDefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>

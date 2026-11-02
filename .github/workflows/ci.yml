@@ -1,0 +1,32 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - uses: microsoft/setup-msbuild@v2
+
+      # Core + tests build and run with the dotnet CLI.
+      - name: Restore (Core and tests)
+        run: dotnet restore tests/DebugPilot.Core.Tests/DebugPilot.Core.Tests.csproj
+      - name: Build (Core and tests)
+        run: dotnet build tests/DebugPilot.Core.Tests/DebugPilot.Core.Tests.csproj --configuration Release --no-restore
+      - name: Test
+        run: dotnet test tests/DebugPilot.Core.Tests/DebugPilot.Core.Tests.csproj --configuration Release --no-build
+      - name: Audit vulnerable dependencies (Core and tests)
+        run: dotnet list tests/DebugPilot.Core.Tests/DebugPilot.Core.Tests.csproj package --vulnerable --include-transitive
+
+      # The VSIX packaging project is a legacy VSSDK project: it needs full MSBuild, not "dotnet build".
+      # Restore runs with warnings-as-errors, so a vulnerable package (NU190x) fails the build here too.
+      - name: Build VSIX (full MSBuild)
+        run: msbuild DebugPilot.sln /restore /t:Build /p:Configuration=Release /p:Platform="Any CPU" /m
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: DebugPilot-vsix
+          path: '**/*.vsix'
+          if-no-files-found: error

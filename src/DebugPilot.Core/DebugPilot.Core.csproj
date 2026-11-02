@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- netstandard2.0 so the same Core loads in-proc (net472, VS 2022) and out-of-proc (net8+). No VS SDK references allowed here. -->
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>DebugPilot.Core</RootNamespace>
+  </PropertyGroup>
+</Project>
